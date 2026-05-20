@@ -5,7 +5,7 @@
 
 [![Playwright](https://img.shields.io/badge/Playwright-1.60.0-45ba4b?logo=playwright)](https://playwright.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?logo=typescript)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/Tests-23%20passing-success)](./project-log/SUMMARY.md)
+[![Tests](https://img.shields.io/badge/Tests-51%20passing-success)](./project-log/SUMMARY.md)
 [![Browser Coverage](https://img.shields.io/badge/Browsers-3-blue)](./playwright.config.ts)
 
 ---
@@ -36,11 +36,11 @@ I'm **Fredy Benitez**, currently a Manual QA with a strong interest in evolving 
 ## 📊 Current Project Status
 
 ```
-Overall Progress: ████████░░░░░░░░░░░░ 40% (Phase 2 of 6)
+Overall Progress: ████████████░░░░░░░░ 60% (Phase 2 of 6)
 
 ✅ Phase 0: Environment Setup - COMPLETED
 ✅ Phase 1: Testing Fundamentals - COMPLETED  
-🚧 Phase 2: Page Object Model - IN PROGRESS
+✅ Phase 2: Page Object Model - COMPLETED
 ⬜ Phase 3: Advanced Testing - PLANNED
 ⬜ Phase 4: CI/CD & Documentation - PLANNED
 ⬜ Phase 5: Python & Accessibility - PLANNED
@@ -50,11 +50,12 @@ Overall Progress: ████████░░░░░░░░░░░░ 4
 
 | Metric | Value | Detail |
 |---------|-------|---------|
-| **Tests created** | 23 | In 5 files organized by feature |
-| **Success rate** | 100% | 69/69 executions (23 tests × 3 browsers) |
+| **Tests created** | 51 | 23 basic + 28 with POM pattern |
+| **Success rate** | 100% | 51/51 tests passing |
 | **Browsers** | 3 | Chrome, Firefox, Safari |
-| **Execution time** | 34.3s | Full suite |
-| **Issues resolved** | 1 | Documented with solution |
+| **Execution time** | 33.9s | Full suite |
+| **Page Objects** | 4 | LoginPage, InventoryPage, CartPage, CheckoutPage |
+| **Issues resolved** | 2 | All documented with solutions |
 
 ---
 
@@ -80,15 +81,26 @@ Overall Progress: ████████░░░░░░░░░░░░ 4
 ```
 ecommerce-playwright-automation/
 │
-├── tests/                      # 5 test files by feature
-│   ├── auth.spec.ts           # 5 authentication tests
-│   ├── cart.spec.ts           # 5 shopping cart tests
-│   ├── checkout.spec.ts       # 6 checkout tests
-│   ├── sorting.spec.ts        # 4 sorting tests
-│   └── e2e.spec.ts            # 3 end-to-end tests
+├── tests/                      # Test suites
+│   ├── 01-authentication/     # 5 authentication tests
+│   ├── 02-shopping/           # 5 shopping cart tests
+│   ├── 03-checkout/           # 6 checkout tests
+│   ├── 04-sorting/            # 4 sorting tests
+│   ├── 05-e2e/                # 3 end-to-end tests
+│   └── pom/                   # ✅ 28 tests with Page Object Model
+│       ├── login-pom.spec.ts
+│       ├── shopping-pom.spec.ts
+│       ├── checkout-pom.spec.ts
+│       └── data-driven.spec.ts
 │
-├── pages/                      # Page Objects (Phase 2)
-├── utils/                      # Test utilities
+├── pages/                      # ✅ Page Objects (Phase 2 COMPLETED)
+│   ├── LoginPage.ts
+│   ├── InventoryPage.ts
+│   ├── CartPage.ts
+│   └── CheckoutPage.ts
+│
+├── utils/                      # ✅ Test utilities
+│   └── testData.ts            # Data-driven test data
 ├── project-log/                # 📚 MY LEARNING JOURNAL
 │   ├── README.md              # Index of all documentation
 │   ├── SUMMARY.md             # Executive summary
@@ -141,13 +153,39 @@ ecommerce-playwright-automation/
 ✅ 3 End-to-End tests
 ```
 
-### Phase 2: Page Object Model (In Progress 🚧)
+### Phase 2: Page Object Model (Completed ✅)
 
-**What I'm learning:**
-- Page Object Model design pattern
-- Refactoring existing tests
-- Code reusability
-- Maintainability best practices
+**What I learned:**
+- Page Object Model design pattern implementation
+- Creating reusable Page Objects with TypeScript classes
+- Refactoring existing tests to use POM
+- Data-driven testing with parameterized tests
+- Code maintainability and scalability best practices
+
+**Challenges resolved:**
+- ❌→✅ **Issue #002**: Sorting dropdown selector timeout → Fixed incorrect selector from `[data-test]` to CSS class
+
+**Page Objects created:**
+```
+✅ LoginPage.ts - Authentication actions
+✅ InventoryPage.ts - Product browsing and cart
+✅ CartPage.ts - Shopping cart management
+✅ CheckoutPage.ts - Checkout flow
+```
+
+**Tests created:**
+```
+✅ 5 Login tests with POM
+✅ 5 Shopping tests with POM
+✅ 6 Checkout tests with POM
+✅ 12 Data-driven parameterized tests
+```
+
+**Key improvements:**
+- 28 new tests using POM pattern (51 total)
+- Centralized test data in `utils/testData.ts`
+- Improved maintainability: changes in UI only require updating Page Objects
+- Better code reusability across test suites
 
 ---
 
@@ -231,15 +269,17 @@ Everything is quantified:
 
 ### Already Achieved ✅
 - [x] Configure Playwright environment from scratch
-- [x] Write 23 functional tests
+- [x] Write 51 functional tests (23 basic + 28 with POM)
 - [x] Validate on 3 browsers
-- [x] Solve real technical problems
+- [x] Implement Page Object Model pattern
+- [x] Create data-driven parameterized tests
+- [x] Solve real technical problems (2 issues resolved)
 - [x] Document systematically
+- [x] Build maintainable and scalable test architecture
 
 ### In Progress 🚧
-- [ ] Implement Page Object Model
-- [ ] Create data-driven tests
-- [ ] Improve maintainability
+- [ ] Expand test coverage with additional scenarios
+- [ ] Prepare for Phase 3: Advanced testing
 
 ### Next Steps 🎯
 - [ ] CI/CD with GitHub Actions
@@ -260,14 +300,17 @@ Everything is quantified:
 
 ### Technical
 - ✅ Test automation with Playwright
-- ✅ Basic TypeScript
+- ✅ TypeScript programming
+- ✅ Page Object Model pattern
+- ✅ Data-driven testing
 - ✅ Multi-browser testing
 - ✅ Debugging and troubleshooting
 - ✅ Git & version control
 - ✅ Test suite organization
+- ✅ Code refactoring and maintainability
 
 ### In Development
-- 🚧 Page Object Model pattern
+- 🚧 Advanced testing scenarios
 - 🚧 Python programming
 - 🚧 Accessibility standards (WCAG)
 - 🚧 CI/CD pipelines
@@ -335,9 +378,9 @@ If you find my documented learning approach interesting, give the repository a �
 
 ---
 
-**Last updated:** May 14, 2026  
-**Current phase:** 2 of 6 (Page Object Model)  
-**Status:** 🚧 Actively developing and learning
+**Last updated:** May 19, 2026  
+**Current phase:** 2 of 6 (Page Object Model - COMPLETED)  
+**Status:** ✅ Phase 2 completed | 🚀 Ready for Phase 3
 
 ---
 
@@ -356,13 +399,14 @@ If you find my documented learning approach interesting, give the repository a �
 
 This project demonstrates that:
 
-1. **I learn fast**: From zero to 23 tests in days
+1. **I learn fast**: From zero to 51 tests with POM in 2 weeks
 2. **I'm self-taught**: Complete documentation without prior guidance
 3. **I use modern tools**: Claude Code, Playwright, TypeScript
-4. **I think like an engineer**: Structure, planning, metrics
-5. **I solve problems**: Issue #001 resolved in 15 minutes
-6. **I'm transparent**: My entire process is documented
-7. **I plan ahead**: Python and accessibility testing in roadmap
-8. **I care about inclusion**: Accessibility is a priority, not an afterthought
+4. **I think like an engineer**: Structure, planning, metrics, design patterns
+5. **I solve problems**: 2 issues resolved quickly with proper documentation
+6. **I write maintainable code**: Implemented POM pattern for scalability
+7. **I'm transparent**: My entire process is documented
+8. **I plan ahead**: Python and accessibility testing in roadmap
+9. **I care about inclusion**: Accessibility is a priority, not an afterthought
 
 **Want to see more details?** 👉 [Check my complete project-log](./project-log/README.md)

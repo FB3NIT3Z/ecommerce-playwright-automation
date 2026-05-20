@@ -1,0 +1,143 @@
+# Issue #002: Sorting Dropdown Selector Timeout in InventoryPage
+
+**Date:** 2026-05-19  
+**Severity:** 🟡 Medium  
+**Status:** ✅ Resolved  
+**Time to Resolve:** 15 minutes
+
+---
+
+## 🐛 Problem Description
+
+Clear description of what went wrong:
+
+The test TC044 "Verify product sorting" in the POM test suite was failing consistently with a timeout error. The test was attempting to select an option from the product sorting dropdown using the selector `[data-test="product_sort_container"]`, but Playwright could not find the element within the default 10-second timeout period.
+
+Error message:
+```
+TimeoutError: locator.selectOption: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator('[data-test="product_sort_container"]')
+```
+
+---
+
+## 📋 Steps to Reproduce
+
+How to recreate this issue:
+
+1. Run the POM tests: `npx playwright test tests/pom/ --project=chromium`
+2. Observe test TC044 in `shopping-pom.spec.ts`
+3. Test attempts to call `inventoryPage.sortBy('za')`
+4. InventoryPage.ts tries to use selector `[data-test="product_sort_container"]`
+5. Timeout occurs after 10 seconds
+
+**Expected Result:** Dropdown element should be found and option should be selected successfully
+
+**Actual Result:** Timeout error - element not found using the `[data-test="product_sort_container"]` selector
+
+---
+
+## 🔍 Environment
+
+- **Playwright Version:** 1.40+
+- **Node Version:** 22.19.0
+- **Browser:** Chromium
+- **OS:** macOS 25.4.0
+
+---
+
+## 💡 Root Cause Analysis
+
+What caused this issue:
+
+The root cause was an incorrect selector in the `InventoryPage` Page Object. The dropdown element in the Sauce Demo application does not have a `data-test="product_sort_container"` attribute. Instead, it has a CSS class `product_sort_container`.
+
+**Why it happened:**
+- Assumption that all elements in Sauce Demo use `data-test` attributes for identification
+- Did not verify the actual HTML structure before creating the Page Object
+- Copy-paste error when creating the locator definition
+- The original Phase 1 tests (working correctly) used the CSS class selector `select.product_sort_container`
+
+---
+
+## ✅ Solution
+
+How the issue was resolved:
+
+### Code Changes
+
+```typescript
+// Before (pages/InventoryPage.ts)
+constructor(page: Page) {
+  this.page = page;
+  this.pageTitle = page.locator('.title');
+  this.cartBadge = page.locator('.shopping_cart_badge');
+  this.cartLink = page.locator('.shopping_cart_link');
+  this.sortDropdown = page.locator('[data-test="product_sort_container"]'); // ❌ WRONG
+  this.hamburgerMenu = page.locator('#react-burger-menu-btn');
+}
+
+// After (pages/InventoryPage.ts)
+constructor(page: Page) {
+  this.page = page;
+  this.pageTitle = page.locator('.title');
+  this.cartBadge = page.locator('.shopping_cart_badge');
+  this.cartLink = page.locator('.shopping_cart_link');
+  this.sortDropdown = page.locator('select.product_sort_container'); // ✅ CORRECT
+  this.hamburgerMenu = page.locator('#react-burger-menu-btn');
+}
+```
+
+### Steps Taken
+
+1. Identified the failing test: TC044 in `shopping-pom.spec.ts`
+2. Reviewed the error message and screenshot in test results
+3. Examined the error-context.md file which showed the actual DOM structure
+4. Compared with the working Phase 1 test in `tests/04-sorting/product-sorting.spec.ts`
+5. Found that Phase 1 test uses `select.product_sort_container` selector
+6. Updated `pages/InventoryPage.ts` with the correct selector
+7. Re-ran all tests to verify fix: 28/28 passed (100%)
+
+---
+
+## 🎓 Lessons Learned
+
+What this taught me:
+
+1. **Always verify selectors against actual HTML:** Don't assume all elements follow the same pattern (e.g., all using data-test attributes). Use browser DevTools or Playwright Inspector to verify.
+
+2. **Reference working code first:** When creating Page Objects for existing tests, always check what selectors the working tests are using before creating new ones.
+
+3. **Not all Sauce Demo elements use data-test attributes:** While many elements use data-test attributes, some elements (like the sorting dropdown) only have CSS classes. Need to be flexible with selector strategies.
+
+4. **Prevention strategy:** 
+   - Use Playwright's codegen tool to generate accurate selectors
+   - Cross-reference with existing working tests
+   - Test Page Objects immediately after creation
+   - Consider adding a verification step in Page Object constructor to fail fast if key elements are not found
+
+---
+
+## 🔗 References
+
+- [Playwright Locators Documentation](https://playwright.dev/docs/locators)
+- [CSS Selectors vs Data Attributes](https://playwright.dev/docs/selectors)
+- Working test reference: `tests/04-sorting/product-sorting.spec.ts` line 22
+- Fixed file: `pages/InventoryPage.ts` line 17
+
+---
+
+## 📝 Additional Notes
+
+This issue highlights the importance of the "verify, then implement" approach. Had I run a quick verification test on the Page Objects immediately after creating them, this issue would have been caught earlier.
+
+The error-context.md file generated by Playwright was extremely helpful in debugging this issue, as it showed the actual page structure at the time of failure.
+
+**Impact on project:** Minimal - caught and fixed during development before any code was committed. All 51 tests now passing at 100%.
+
+**Similar issues to watch for:** Other elements that might not follow the data-test pattern should be verified, especially when adding more Page Objects in Phase 3.
+
+---
+
+*Issue logged: 2026-05-19 18:30 | Resolved: 2026-05-19 18:45*

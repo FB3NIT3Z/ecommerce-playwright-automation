@@ -4,7 +4,7 @@
 
 **Author:** Fredy Benitez  
 **Project Duration:** May 2026 - Ongoing  
-**Status:** 25% Complete (2/5 phases)
+**Status:** 60% Complete (3/5 phases)
 
 ---
 
@@ -31,25 +31,36 @@ Professional test automation framework demonstrating modern QA engineering pract
 - **Multi-browser compatibility** verified
 - **Execution time:** 34.3 seconds for full suite
 
+#### ✅ Phase 2: Page Object Model
+- **4 Page Objects** created (LoginPage, InventoryPage, CartPage, CheckoutPage)
+- **28 new tests** using POM pattern
+- **12 data-driven tests** with parameterized data
+- **51 total tests** (23 basic + 28 POM)
+- **100% pass rate** maintained
+- **Execution time:** 33.9 seconds for full suite
+
 ### Test Coverage Breakdown
 
-| Feature | Tests | Status |
-|---------|-------|--------|
-| Authentication | 5 | ✅ |
-| Shopping Cart | 5 | ✅ |
-| Checkout Flow | 6 | ✅ |
-| Product Sorting | 4 | ✅ |
-| End-to-End Scenarios | 3 | ✅ |
+| Feature | Tests (Basic) | Tests (POM) | Total | Status |
+|---------|---------------|-------------|-------|--------|
+| Authentication | 5 | 5 | 10 | ✅ |
+| Shopping Cart | 5 | 5 | 10 | ✅ |
+| Checkout Flow | 6 | 6 | 12 | ✅ |
+| Product Sorting | 4 | 1 | 5 | ✅ |
+| End-to-End Scenarios | 3 | 0 | 3 | ✅ |
+| Data-Driven Tests | 0 | 12 | 12 | ✅ |
+| **TOTAL** | **23** | **28** | **51** | ✅ |
 
 ---
 
 ## 📈 Metrics & Performance
 
-- **Test Cases Created:** 23 unique (69 with multi-browser)
-- **Pass Rate:** 100% (69/69 passing)
+- **Test Cases Created:** 51 unique (23 basic + 28 POM)
+- **Pass Rate:** 100% (51/51 passing)
 - **Browser Coverage:** 3 (Chrome, Firefox, Safari)
-- **Average Execution Time:** 34.3s for full suite
-- **Code Organization:** 5 feature-based test suites
+- **Average Execution Time:** 33.9s for full suite
+- **Page Objects:** 4 (LoginPage, InventoryPage, CartPage, CheckoutPage)
+- **Code Organization:** 9 test suites (5 basic + 4 POM)
 - **Technical Debt:** Zero
 
 ---
@@ -73,13 +84,21 @@ Professional test automation framework demonstrating modern QA engineering pract
    - Resolved by using proper locator chaining
    - Time to resolution: 15 minutes
 
+2. **Sorting Dropdown Selector Timeout** ([Issue #002](./issues/002-inventory-sorting-selector-timeout.md))
+   - Incorrect selector in InventoryPage POM causing test failures
+   - Fixed by using correct CSS class selector instead of data-test attribute
+   - Time to resolution: 15 minutes
+
 ### Best Practices Implemented
 
 - ✅ Independent test cases with no inter-dependencies
 - ✅ Consistent `beforeEach` hooks for test isolation
-- ✅ Descriptive test IDs (TC001-TC029)
+- ✅ Descriptive test IDs (TC001-TC054)
 - ✅ Feature-based organization
 - ✅ Multi-browser validation
+- ✅ Page Object Model pattern for maintainability
+- ✅ Data-driven testing for scalability
+- ✅ Centralized test data management
 
 ---
 
@@ -87,9 +106,12 @@ Professional test automation framework demonstrating modern QA engineering pract
 
 ### Technical Skills
 - Test automation with Playwright
-- TypeScript/JavaScript
+- TypeScript/JavaScript programming
+- Page Object Model design pattern
+- Data-driven testing
 - Multi-browser testing
 - Test architecture and organization
+- Code refactoring and maintainability
 - Debugging and troubleshooting
 - Git version control
 
@@ -106,12 +128,12 @@ Professional test automation framework demonstrating modern QA engineering pract
 
 ### Upcoming Phases
 
-**Phase 2: Page Object Model** (In Progress)
-- Refactor tests using POM design pattern
-- Implement data-driven testing
-- Create reusable page components
+**Phase 3: Advanced Testing** (Next)
+- Add second test site (OWASP Juice Shop)
+- Expand test coverage
+- Advanced Playwright features
 
-**Phase 3: Advanced Testing** (Planned)
+**Phase 4: CI/CD & Documentation** (Planned)
 - Add second test site (OWASP Juice Shop)
 - Cross-browser testing expansion
 - Additional test scenarios
@@ -128,12 +150,12 @@ Professional test automation framework demonstrating modern QA engineering pract
 
 ```
 Week 1: Phase 0 & 1 Complete ✅
-Week 2: Phase 2 (POM) - In Progress ⚠️
-Week 3: Phase 3 (Advanced) - Planned ⬜
+Week 2: Phase 2 (POM) Complete ✅
+Week 3: Phase 3 (Advanced) - Next ⬜
 Week 4-5: Phase 4 (CI/CD) - Planned ⬜
 ```
 
-**Current Status:** 40% complete (2/5 phases)
+**Current Status:** 60% complete (3/5 phases)
 
 ---
 
@@ -150,27 +172,25 @@ This project demonstrates:
 
 ---
 
-## 📞 Interview Talking Points
-
-### "Tell me about a testing project you're proud of"
-> "I built a comprehensive Playwright automation framework from scratch, creating 23 test cases with 100% pass rate across three browsers. The project showcases modern testing practices including multi-browser support and feature-based organization. I documented the entire development journey, including problem-solving and technical decisions."
-
-### "How do you approach test automation?"
-> "I start with proper planning and environment setup, then build tests iteratively by feature. I maintain 100% pass rates and ensure tests are independent and maintainable. I document issues and learnings systematically, which helps with knowledge retention and shows professional discipline."
-
-### "Give an example of a technical problem you solved"
-> "While implementing product sorting tests, I encountered selector timeout issues. I debugged by examining screenshots, identified the root cause as incorrect selector syntax, and resolved it by using proper Playwright locator methods. The resolution took 15 minutes, and I documented it for future reference."
-
----
-
 ## 📁 Repository Structure
 
 ```
 ecommerce-playwright-automation/
-├── tests/              # 23 test cases organized by feature
-├── pages/              # Page Objects (Phase 2)
+├── tests/              # 51 test cases
+│   ├── 01-authentication/  # 5 basic tests
+│   ├── 02-shopping/        # 5 basic tests
+│   ├── 03-checkout/        # 6 basic tests
+│   ├── 04-sorting/         # 4 basic tests
+│   ├── 05-e2e/             # 3 basic tests
+│   └── pom/                # 28 POM tests
+├── pages/              # 4 Page Objects (Phase 2)
+│   ├── LoginPage.ts
+│   ├── InventoryPage.ts
+│   ├── CartPage.ts
+│   └── CheckoutPage.ts
 ├── utils/              # Test utilities
-├── project-log/        # Development journal (this folder)
+│   └── testData.ts    # Data-driven test data
+├── project-log/        # Development journal
 ├── playwright.config.ts
 └── package.json
 ```
@@ -198,4 +218,4 @@ ecommerce-playwright-automation/
 
 *This summary is updated regularly as the project progresses.*
 
-**Last Updated:** May 13, 2026
+**Last Updated:** May 19, 2026
