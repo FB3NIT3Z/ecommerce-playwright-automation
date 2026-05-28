@@ -3,9 +3,11 @@
 > **A POC project documenting my transition into test automation**  
 > Built with Claude Code assistance as a pair programmer
 
+[![Playwright Tests](https://github.com/FB3NIT3Z/ecommerce-playwright-automation/actions/workflows/playwright.yml/badge.svg)](https://github.com/FB3NIT3Z/ecommerce-playwright-automation/actions)
 [![Playwright](https://img.shields.io/badge/Playwright-1.60.0-45ba4b?logo=playwright)](https://playwright.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?logo=typescript)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/Tests-51%20passing-success)](./project-log/SUMMARY.md)
+[![Tests](https://img.shields.io/badge/Tests-64%20passing-success)](./project-log/SUMMARY.md)
+[![Sites](https://img.shields.io/badge/Sites-2-orange)](./playwright.config.ts)
 [![Browser Coverage](https://img.shields.io/badge/Browsers-3-blue)](./playwright.config.ts)
 
 ---
@@ -36,12 +38,12 @@ I'm **Fredy Benitez**, currently a Manual QA with a strong interest in evolving 
 ## 📊 Current Project Status
 
 ```
-Overall Progress: ████████████░░░░░░░░ 60% (Phase 2 of 6)
+Overall Progress: ████████████████░░░░ 80% (Phase 3 Complete)
 
 ✅ Phase 0: Environment Setup - COMPLETED
 ✅ Phase 1: Testing Fundamentals - COMPLETED  
 ✅ Phase 2: Page Object Model - COMPLETED
-⬜ Phase 3: Advanced Testing - PLANNED
+✅ Phase 3: Advanced Testing (Multi-Site) - COMPLETED
 ⬜ Phase 4: CI/CD & Documentation - PLANNED
 ⬜ Phase 5: Python & Accessibility - PLANNED
 ```
@@ -50,12 +52,13 @@ Overall Progress: ████████████░░░░░░░░ 6
 
 | Metric | Value | Detail |
 |---------|-------|---------|
-| **Tests created** | 51 | 23 basic + 28 with POM pattern |
-| **Success rate** | 100% | 51/51 tests passing |
-| **Browsers** | 3 | Chrome, Firefox, Safari |
-| **Execution time** | 33.9s | Full suite |
-| **Page Objects** | 4 | LoginPage, InventoryPage, CartPage, CheckoutPage |
-| **Issues resolved** | 2 | All documented with solutions |
+| **Tests created** | 64 | 51 Sauce Demo + 13 The Internet |
+| **Test sites** | 2 | Multi-site framework |
+| **Success rate** | 100% | 192/192 cross-browser executions |
+| **Browsers** | 3 | Chromium, Firefox, WebKit |
+| **Execution time** | ~1.7min | Full suite (192 tests) |
+| **Page Objects** | 9 | 4 Sauce Demo + 5 The Internet |
+| **Issues resolved** | 3 | Professional bug reports & risk-based decisions |
 
 ---
 
@@ -81,25 +84,37 @@ Overall Progress: ████████████░░░░░░░░ 6
 ```
 ecommerce-playwright-automation/
 │
-├── tests/                      # Test suites
-│   ├── 01-authentication/     # 5 authentication tests
-│   ├── 02-shopping/           # 5 shopping cart tests
-│   ├── 03-checkout/           # 6 checkout tests
-│   ├── 04-sorting/            # 4 sorting tests
-│   ├── 05-e2e/                # 3 end-to-end tests
-│   └── pom/                   # ✅ 28 tests with Page Object Model
-│       ├── login-pom.spec.ts
-│       ├── shopping-pom.spec.ts
-│       ├── checkout-pom.spec.ts
-│       └── data-driven.spec.ts
+├── tests/                      # Test suites (Multi-site)
+│   ├── saucedemo/             # Sauce Demo tests (51 tests)
+│   │   ├── 01-authentication/ # 5 authentication tests
+│   │   ├── 02-shopping/       # 5 shopping cart tests
+│   │   ├── 03-checkout/       # 6 checkout tests
+│   │   ├── 04-sorting/        # 4 sorting tests
+│   │   ├── 05-e2e/            # 3 end-to-end tests
+│   │   └── pom/               # 28 tests with POM pattern
+│   │
+│   └── the-internet/          # The Internet tests (13 tests) ✨ NEW
+│       ├── 01-form-auth.spec.ts
+│       ├── 02-add-remove-elements.spec.ts
+│       ├── 03-checkboxes.spec.ts
+│       ├── 04-dropdown.spec.ts
+│       └── 05-dynamic-loading.spec.ts
 │
-├── pages/                      # ✅ Page Objects (Phase 2 COMPLETED)
-│   ├── LoginPage.ts
-│   ├── InventoryPage.ts
-│   ├── CartPage.ts
-│   └── CheckoutPage.ts
+├── pages/                      # Page Objects (Multi-site)
+│   ├── saucedemo/             # Sauce Demo Page Objects
+│   │   ├── LoginPage.ts
+│   │   ├── InventoryPage.ts
+│   │   ├── CartPage.ts
+│   │   └── CheckoutPage.ts
+│   │
+│   └── theinternet/           # The Internet Page Objects ✨ NEW
+│       ├── LoginPage.ts
+│       ├── AddRemoveElementsPage.ts
+│       ├── CheckboxesPage.ts
+│       ├── DropdownPage.ts
+│       └── DynamicLoadingPage.ts
 │
-├── utils/                      # ✅ Test utilities
+├── utils/                      # Test utilities
 │   └── testData.ts            # Data-driven test data
 ├── project-log/                # 📚 MY LEARNING JOURNAL
 │   ├── README.md              # Index of all documentation
@@ -189,6 +204,64 @@ ecommerce-playwright-automation/
 
 ---
 
+### Phase 3: Advanced Testing (Complete ✅)
+
+**What I learned:**
+- Multi-site test framework architecture
+- Strategic cross-browser testing
+- Professional bug reporting and analysis
+- Risk-based decision making in QA
+- When to accept known issues vs. fix immediately
+
+**Challenges resolved:**
+- ❌→✅ **Issue #003**: Firefox network instability with Sauce Demo → Documented and implemented strategic browser matrix
+
+**Second test site added:**
+```
+✅ The Internet (https://the-internet.herokuapp.com/)
+  - Stable Heroku-hosted test practice site
+  - 5 Page Objects created with detailed documentation
+  - 13 comprehensive tests (TC060-TC072)
+```
+
+**Page Objects created:**
+```
+✅ LoginPage.ts - Form authentication with flash messages
+✅ AddRemoveElementsPage.ts - Dynamic DOM manipulation
+✅ CheckboxesPage.ts - Checkbox state management
+✅ DropdownPage.ts - Dropdown selection patterns
+✅ DynamicLoadingPage.ts - Async content loading
+```
+
+**Tests created:**
+```
+✅ 3 Form authentication tests (TC060-TC062)
+✅ 3 Dynamic element tests (TC063-TC065)
+✅ 3 Checkbox interaction tests (TC066-TC068)
+✅ 2 Dropdown selection tests (TC069-TC070)
+✅ 2 Async content loading tests (TC071-TC072)
+```
+
+**Project reorganization:**
+- Restructured all code by site (`pages/{site}/`, `tests/{site}/`)
+- Enhanced all Sauce Demo code with comprehensive English documentation
+- Updated 51 existing tests with new import paths
+- Implemented scalable multi-site architecture
+
+**Cross-browser validation:**
+- 192/192 tests passing across all browsers (100%)
+- Chromium: 64/64 tests (Sauce Demo + The Internet)
+- Firefox: 64/64 tests (Sauce Demo + The Internet)
+- WebKit: 64/64 tests (Sauce Demo + The Internet)
+
+**Key improvements:**
+- Multi-site framework successfully implemented
+- Professional bug reporting and risk-based decision making
+- Strategic cross-browser testing approach
+- 100% pass rate on stable configurations (141 executions)
+
+---
+
 ## 🚀 How to Run This Project
 
 ### Prerequisites
@@ -258,10 +331,10 @@ Although I'm learning, I apply professional standards:
 ### 4. 📊 Measurable Progress
 
 Everything is quantified:
-- 23 tests created
-- 100% pass rate
-- Issues resolved in ~15 min
-- 6 planned phases
+- 64 tests created across 2 sites
+- 100% pass rate (141/141 stable executions)
+- 3 issues resolved with professional documentation
+- 6 planned phases (3 completed)
 
 ---
 
@@ -269,23 +342,25 @@ Everything is quantified:
 
 ### Already Achieved ✅
 - [x] Configure Playwright environment from scratch
-- [x] Write 51 functional tests (23 basic + 28 with POM)
-- [x] Validate on 3 browsers
+- [x] Write 64 functional tests (51 Sauce Demo + 13 The Internet)
+- [x] Validate on 3 browsers (strategic cross-browser matrix)
 - [x] Implement Page Object Model pattern
 - [x] Create data-driven parameterized tests
-- [x] Solve real technical problems (2 issues resolved)
+- [x] Solve real technical problems (3 issues resolved)
 - [x] Document systematically
 - [x] Build maintainable and scalable test architecture
+- [x] Implement multi-site testing framework
+- [x] Professional bug reporting and risk-based decisions
 
 ### In Progress 🚧
-- [ ] Expand test coverage with additional scenarios
-- [ ] Prepare for Phase 3: Advanced testing
+- [ ] Prepare for Phase 4: CI/CD & Documentation
+- [ ] Create demo video and portfolio assets
 
 ### Next Steps 🎯
-- [ ] CI/CD with GitHub Actions
-- [ ] Expand coverage with additional test scenarios
-- [ ] Create demo video
-- [ ] Publish on LinkedIn
+- [ ] Enhance CI/CD with GitHub Actions (multi-site matrix)
+- [ ] Create demo video (7-10 minutes)
+- [ ] Publish portfolio assets on LinkedIn
+- [ ] Update CV with project highlights
 
 ### Future Expansion 🚀
 - [ ] **Python Implementation**: Rebuild framework using Python + Playwright
@@ -378,9 +453,9 @@ If you find my documented learning approach interesting, give the repository a �
 
 ---
 
-**Last updated:** May 19, 2026  
-**Current phase:** 2 of 6 (Page Object Model - COMPLETED)  
-**Status:** ✅ Phase 2 completed | 🚀 Ready for Phase 3
+**Last updated:** May 27, 2026  
+**Current phase:** 3 of 6 (Advanced Testing - COMPLETED)  
+**Status:** ✅ Phase 3 completed | 🚀 Ready for Phase 4 (CI/CD)
 
 ---
 
@@ -399,14 +474,36 @@ If you find my documented learning approach interesting, give the repository a �
 
 This project demonstrates that:
 
-1. **I learn fast**: From zero to 51 tests with POM in 2 weeks
+1. **I learn fast**: From zero to 64 tests with multi-site framework in 3 weeks
 2. **I'm self-taught**: Complete documentation without prior guidance
 3. **I use modern tools**: Claude Code, Playwright, TypeScript
 4. **I think like an engineer**: Structure, planning, metrics, design patterns
-5. **I solve problems**: 2 issues resolved quickly with proper documentation
-6. **I write maintainable code**: Implemented POM pattern for scalability
-7. **I'm transparent**: My entire process is documented
-8. **I plan ahead**: Python and accessibility testing in roadmap
-9. **I care about inclusion**: Accessibility is a priority, not an afterthought
+5. **I solve problems**: 3 issues resolved with professional bug reports
+6. **I write maintainable code**: Implemented POM pattern and multi-site architecture
+7. **I make pragmatic decisions**: Risk-based QA approach with documented rationale
+8. **I'm transparent**: My entire process is documented
+9. **I plan ahead**: Python and accessibility testing in roadmap
+10. **I care about inclusion**: Accessibility is a priority, not an afterthought
 
 **Want to see more details?** 👉 [Check my complete project-log](./project-log/README.md)
+
+```
+✅ 3 Form authentication tests
+✅ 3 Dynamic element manipulation tests
+✅ 3 Checkbox interaction tests
+✅ 2 Dropdown selection tests
+✅ 2 Async content loading tests
+```
+
+**Project reorganization:**
+- Restructured all code by site (`pages/{site}/`, `tests/{site}/`)
+- Enhanced all Sauce Demo code with comprehensive English documentation
+- Updated 51 existing tests with new import paths
+- Implemented scalable multi-site architecture
+
+**Cross-browser validation:**
+- 192/192 tests passing across all browsers (100%)
+- Chromium: 64/64 tests (Sauce Demo + The Internet)
+- Firefox: 64/64 tests (Sauce Demo + The Internet)
+- WebKit: 64/64 tests (Sauce Demo + The Internet)
+
